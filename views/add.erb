@@ -1,0 +1,49 @@
+<div class="container">
+	<div class="row">
+		<div class="col-md-8 decalage fenetre">
+    		<div id="formul">
+    		<p class="texte">Ajoutez votre avion :
+    		</p>
+    		<form method="POST" action="/add">
+				<input id="cons" name="constructeur" class="inputp" placeholder="Constructeur">
+				<input id="mod" name="modele" class="inputp" placeholder="Modèle">
+				<input id="desc" name="equipement" class="inputi" placeholder="Equipement">
+				<textarea name="descript" class="inputr" placeholder="Description"></textarea>
+				<input id="img" name="image" class="inputi" placeholder="Image(url)">
+			 	<button id="confirm" class="btn btn-info decalage5" type="submit">Ajouter
+			 	</button>
+			</form>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+<script>
+	function idp(id) {
+		return document.getElementById(id);
+	};
+// ces fonctions sont des reliques d'une époque révolue
+/*	function crypteur(){
+		var cons = "c#"+idp("cons").value;
+		var mod = "m#"+idp("mod").value;
+		var desc = "d#"+idp("desc").value;
+		var img = "i#"+idp("img").value;
+		var datacrypt = cons+mod+desc+img;
+		idp("recept").value = datacrypt;
+		idp("confirm").style.display = "inline";
+		idp("add").style.display = "none";
+	};
+/*	function decrypteur(){
+		var crypt = idp("recept").value;
+		var constr = crypt.substring(2,crypt.indexOf("m#"));
+		var modetotal = crypt.substring(constr.length+4,crypt.length);
+		var mode = modetotal.split(";");
+		var assemb = "";
+		for (i = 0; i <= mode.length; i++) {
+			fragment = "<option>"+mode[i]+"</option>";
+			assemb += fragment;
+		};
+		var impression = "Marque : "+constr+"Modèle : "+"<select>"+assemb+"</select>";
+		idp("kikoo").innerHTML = impression;
+	};
+</script>

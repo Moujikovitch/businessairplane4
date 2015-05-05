@@ -1,0 +1,2 @@
+require './jetprivee'
+require 'sinatra/activerecord/rake'

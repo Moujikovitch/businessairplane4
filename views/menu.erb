@@ -1,0 +1,81 @@
+<div class="container">
+<nav class="navbar navbar-default decalage fenetre">
+    <p class="texte">Choisissez votre avion :</p>
+	<div class="col-md-10">
+        <form class="form-inline">
+            <select id="cons" class="form-control">
+
+            </select>
+            <div id="mod"></div>
+        </form>
+    </div>
+</nav>
+<div class="row decalage50">
+</div>
+	<nav class="navbar navbar-default fenetre masque3" id="coucou" style="display:none">
+		<div class="col-md-10">
+			<img src="media/avion.jpg" class="image"></img>
+			<h3 class="titre">Airbus A-347</h3>
+			<p class="texte">Oui, nous parlons bien de l'Airbus de ligne A-347. Mais sans les passagers, uniquements les hotesses.
+			Les sièges passagers ont été remplacé par une piscine, une salle cinéma, et un opéra. Un habitacle spécial est reservé
+			à l'orchestre chinois (les musiciens chinois prennent moins de place) qui se fera un plaisir de donner une représentation
+			de Wagner pendant vos épuisants voyages vers vos demeures secondaires.</p>
+		</div>
+	</nav>
+</div>
+<script>
+    cons = [];
+    mod = [];
+    des = [];
+    img = [];
+</script>
+<% @datas.each do |t| %>
+<script>cons.push("<%= t.constructeur  %>")</script>
+<% end %>
+<% @datas.each do |t| %>
+<script>mod.push("<%= t.modele  %>")</script>
+<% end %>
+<% @datas.each do |t| %>
+<script>des.push("<%= t.descript  %>")</script>
+<% end %>
+<% @datas.each do |t| %>
+<script>img.push("<%= t.image  %>")</script>
+<% end %>
+<script>
+//fonction perso de base
+    function idp(id) {
+        return document.getElementById(id);
+    };
+//supprimer et allouer les doublons à un constructeur unique
+for (i = 0; i < cons.length; i++) {
+    if (cons.indexOf(cons[i])!= cons.lastIndexOf(cons[i])) {
+        var doublon = cons.lastIndexOf(cons[i]);
+        cons.splice(doublon,1);
+        mod[i] = mod[i]+":"+mod[doublon];
+        mod.splice(doublon,1);
+        des[i] = des[i]+":"+des[doublon];
+        des.splice(doublon,1);
+        img[i] = img[i]+":"+img[doublon];
+        img.splice(doublon,1);
+        i=0;
+    };
+};
+//créer le selecteur pour les constructeurs
+var consoption = "";
+for (i = 0; i < cons.length; i++) {
+    consoption += "<option value='opt"+i.toString()+"'>"+cons[i]+"</option>";
+};
+idp("cons").innerHTML = "<option disabled selected>Constructeur</option>"+consoption;
+//créer les selecteurs pour les modèles
+var modselect = "";
+for (i=0; i < mod.length ; i++) {
+    var modopt = mod[i].split(":");
+    var modoption = "";
+    for (z=0; z < modopt.length; z++) {
+        modoption += "<option value='opt2"+z.toString()+"'>"+modopt[z]+"</option>";
+    };
+    modselect += "<select class='form-control masque' id='opt"+i.toString()+"'><option disabled selected>Modèle</option>"+modoption+"</select>";
+};
+idp("mod").innerHTML = modselect;
+//créer des articles pour les avions
+</script>
