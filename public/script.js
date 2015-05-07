@@ -1,20 +1,19 @@
-    $(function() {
+/*    $(function() {
         $('#cons').change(function(){
             $('.masque').hide();
             $('.masque2').hide();
-            $('.masque3').hide();
             $('#' + $(this).val()).show();
         });
     });
-
+*/
     $(function() {
-        $('#Dassault').change(function(){
+        $(this).change(function(){
+            $('.masque').hide();
             $('.masque2').hide();
-            $('.masque3').hide();
             $('#' + $(this).val()).show();
         });
     });
-
+/*
     $(function() {
         $('#Airbus').change(function(){
             $('.masque2').hide();

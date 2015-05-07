@@ -2,19 +2,22 @@
 <nav class="navbar navbar-default decalage fenetre">
     <p class="texte">Choisissez votre avion :</p>
 	<div class="col-md-10">
+        <div id="menuselect">
         <form class="form-inline">
             <select id="cons" class="form-control">
 
             </select>
             <div id="mod"></div>
+        </div>
         </form>
     </div>
 </nav>
 <div class="row decalage50">
 </div>
+<div id="articles" class="lol">
 	<nav class="navbar navbar-default fenetre masque3" id="coucou" style="display:none">
 		<div class="col-md-10">
-			<img src="media/avion.jpg" class="image"></img>
+			<img src="media/avion.jpg" class="image">
 			<h3 class="titre">Airbus A-347</h3>
 			<p class="texte">Oui, nous parlons bien de l'Airbus de ligne A-347. Mais sans les passagers, uniquements les hotesses.
 			Les sièges passagers ont été remplacé par une piscine, une salle cinéma, et un opéra. Un habitacle spécial est reservé
@@ -23,11 +26,13 @@
 		</div>
 	</nav>
 </div>
+</div>
 <script>
     cons = [];
     mod = [];
     des = [];
     img = [];
+    //inclusion de la base de donnée ruby dans les tableaux correspondant
 </script>
 <% @datas.each do |t| %>
 <script>cons.push("<%= t.constructeur  %>")</script>
@@ -46,6 +51,14 @@
     function idp(id) {
         return document.getElementById(id);
     };
+    function hideclass(iclass) {
+       for (i=0; i < document.getElementsByClassName(iclass).length; i++) {
+         document.getElementsByClassName(iclass)[i].style.display ="none";
+         if (iclass == "opt1") {
+         document.getElementsByClassName(iclass)[i].options[0].selected = "true";
+        };
+       };
+    };
 //supprimer et allouer les doublons à un constructeur unique
 for (i = 0; i < cons.length; i++) {
     if (cons.indexOf(cons[i])!= cons.lastIndexOf(cons[i])) {
@@ -63,19 +76,36 @@ for (i = 0; i < cons.length; i++) {
 //créer le selecteur pour les constructeurs
 var consoption = "";
 for (i = 0; i < cons.length; i++) {
-    consoption += "<option value='opt"+i.toString()+"'>"+cons[i]+"</option>";
+    consoption += "<option value='opt1"+i.toString()+"'>"+cons[i]+"</option>";
 };
 idp("cons").innerHTML = "<option disabled selected>Constructeur</option>"+consoption;
-//créer les selecteurs pour les modèles
+//créer les selecteurs pour les modèles et les articles finaux
 var modselect = "";
+var aviarticle = "";
+var num = 0;
 for (i=0; i < mod.length ; i++) {
+    num++
     var modopt = mod[i].split(":");
+    var imgopt = img[i].split(":");
+    var desopt = des[i].split(":");
     var modoption = "";
+    var imgarticle = "";
     for (z=0; z < modopt.length; z++) {
-        modoption += "<option value='opt2"+z.toString()+"'>"+modopt[z]+"</option>";
+        num += z
+        modoption += "<option value='opt2"+num.toString()+"'>"+modopt[z]+"</option>";
+        imgarticle += "<nav class='navbar navbar-default fenetre opt2' id='opt2"+num.toString()+"'><div class='col-md-10'><img src="+imgopt[z]+" class='image'><h3 class='titre'>"+cons[i]+modopt[z]+"</h3><p class='texte'>"+desopt[z]+"</p></div></nav>";
     };
-    modselect += "<select class='form-control masque' id='opt"+i.toString()+"'><option disabled selected>Modèle</option>"+modoption+"</select>";
+    modselect += "<select class='form-control opt1' id='opt1"+i.toString()+"'><option disabled selected>Modèle</option>"+modoption+"</select>";
+    aviarticle += imgarticle;
+
 };
 idp("mod").innerHTML = modselect;
-//créer des articles pour les avions
+idp("articles").innerHTML = aviarticle;
+//gestion de l'apparition du contenu en fonction des changements de select
+var ecouteur = idp("menuselect");
+ecouteur.addEventListener('change', function (e){
+    console.log(idp(e.target.value));
+    hideclass(e.target.value.substring(0,4));
+    idp(e.target.value).style.display="";
+});
 </script>
